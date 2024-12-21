@@ -1,55 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <sys/wait.h>
+#include <string.h>
+
+#define MAX_CMD_LEN 1024
 
 /**
- * main - main function
+ * main - Entry point of the shell program.
  *
+ * Return: Always 0 (Success)
  */
-
-#define MAX_COMMAND_LENGTH 1024
-
 int main(void)
 {
-char *prompt = "#cisfun$ ";
-char command[MAX_COMMAND_LENGTH];
-char *args[2];
-pid_t pid;
+char *command = NULL;
+size_t len = 0;
+ssize_t read;
 
 while (1)
 {
-printf("%s", prompt);
-fflush(stdout);
-if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
+printf("$ ");
+read = getline(&command, &len, stdin);
+
+if (read == -1)
 {
-printf("\n");
-break;
+free(command);
+exit(0);
 }
-command[strcspn(command, "\n")] = '\0';
-if (strlen(command) == 0)
+
+command[strcspn(command, "\n")] = 0;
+
+if (fork() == 0)
 {
-continue;
+char *args[] = {command, NULL};
+if (execvp(args[0], args) == -1)
+{
+perror("Error");
 }
-args[0] = command;
-args[1] = NULL;
-pid = fork();
-if (pid == -1)
-{
-perror("fork");
-exit(EXIT_FAILURE);
-} else if (pid == 0)
-{
-if (execve(args[0], args, NULL) == -1)
-{
-fprintf(stderr, "./shell: No such file or directory\n");
-exit(EXIT_FAILURE);
+exit(1);
 }
-} else
+else
 {
 wait(NULL);
 }
 }
+
+free(command);
 return (0);
 }
