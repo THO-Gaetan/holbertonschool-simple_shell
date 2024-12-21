@@ -1,32 +1,18 @@
-#include "binary_trees.h"
+#include "lists.h"
 #include <stdlib.h>
 
 /**
- * binary_tree_insert_left - Insère un nœud comme enfant gauche d'un autre
- * @parent: Pointeur vers le nœud parent pour insérer l'enfant gauche
- * @value: La valeur à stocker dans le nouveau nœud
- *
- * Return: Un pointeur vers le nœud créé, ou NULL en cas d'échec
+ * free_dlistint - Frees a dlistint_t list
+ * @head: Pointer to the head of the list
  */
-binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
+void free_dlistint(dlistint_t *head)
 {
-binary_tree_t *new_node;
+	dlistint_t *temp;
 
-if (parent == NULL)
-return (NULL);
-
-new_node = binary_tree_node(parent, value);
-if (new_node == NULL)
-return (NULL);
-
-if (parent->left != NULL)
-{
-new_node->left = parent->left;
-parent->left->parent = new_node;
-}
-
-parent->left = new_node;
-
-return (new_node);
-
+	while (head != NULL)
+	{
+		temp = head;
+		head = head->next;
+		free(temp);
+	}
 }
