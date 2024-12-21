@@ -8,4 +8,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+int shell(void);
+int enter_shell(void);
+int exit_shell(void);
+char *remove_newline(char *str);
+
 #endif

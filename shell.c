@@ -1,17 +1,12 @@
 #include "main.h"
 
-#define MAX_CMD_LENGHT 1024
 
-int shell(void)
+
+int main(void)
 {
-	char *box;
-	size_t n = MAX_CMD_LENGHT;
-
-	while (strcmp(box, "exit") != 0)
+	while (1)
 	{
-		printf("Ardo@Gaetan:My_Shell$ ");
-		getline(&box, &n, stdin);
-		printf("%s", box);
+		enter_shell();
 	}
 	return (0);
 }
