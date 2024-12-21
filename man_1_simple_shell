@@ -1,18 +1,55 @@
-#include "lists.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 /**
- * free_dlistint - Frees a dlistint_t list
- * @head: Pointer to the head of the list
+ * main - main function
+ *
  */
-void free_dlistint(dlistint_t *head)
-{
-	dlistint_t *temp;
 
-	while (head != NULL)
-	{
-		temp = head;
-		head = head->next;
-		free(temp);
-	}
+#define MAX_COMMAND_LENGTH 1024
+
+int main(void)
+{
+char *prompt = "#cisfun$ ";
+char command[MAX_COMMAND_LENGTH];
+char *args[2];
+pid_t pid;
+
+while (1)
+{
+printf("%s", prompt);
+fflush(stdout);
+if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
+{
+printf("\n");
+break;
+}
+command[strcspn(command, "\n")] = '\0';
+if (strlen(command) == 0)
+{
+continue;
+}
+args[0] = command;
+args[1] = NULL;
+pid = fork();
+if (pid == -1)
+{
+perror("fork");
+exit(EXIT_FAILURE);
+} else if (pid == 0)
+{
+if (execve(args[0], args, NULL) == -1)
+{
+fprintf(stderr, "./shell: No such file or directory\n");
+exit(EXIT_FAILURE);
+}
+} else
+{
+wait(NULL);
+}
+}
+return (0);
 }
