@@ -1,49 +1,12 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-
-#define MAX_CMD_LEN 1024
 
 /**
- * main - Entry point of the shell program.
+ * main - Entry point of the program
  *
  * Return: Always 0 (Success)
  */
 int main(void)
 {
-    char *command = NULL;
-    size_t len = 0;
-
-    while (1)
-    {
-        printf("$ ");
-
-        if (getline(&command, &len, stdin) == -1)
-        {
-            free(command);
-            exit(0);
-        }
-
-        command[strcspn(command, "\n")] = 0;
-
-        pid_t pid = fork();
-        if (pid == 0)
-        {
-            char *args[] = {command, NULL};
-            if (execvp(args[0], args) == -1)
-            {
-                perror("./hsh");
-            }
-            exit(EXIT_FAILURE);
-        }
-        else if (pid > 0)
-        {
-            wait(NULL);
-        }
-    }
-
-    free(command);
+    printf("Hello, World!\n");
     return (0);
 }
