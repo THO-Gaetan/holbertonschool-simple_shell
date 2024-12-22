@@ -40,7 +40,7 @@ char *args[] = {command, NULL};
 if (execvp(args[0], args) == -1)
 {
 perror("./simple_shell");
-        }
+}
 exit(EXIT_FAILURE);
 }
 else if (pid < 0)
