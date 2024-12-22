@@ -4,25 +4,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#define PROMPT "#cisfun$ "
 #define BUFFER_SIZE 1024
-
-/**
- * read_command - Reads a command from standard input
- *
- * Return: The command entered by the user or NULL on EOF
- */
-char *read_command(void)
-{
-char *command = NULL;
-ssize_t buf = 0;
-
-if (getline(&command, &buf, stdin) == -1)
-{
-free(command);
-return (NULL);
-}
-return (command);
-}
 
 /**
  * execute_command - Executes a command using execve
@@ -34,20 +17,20 @@ int execute_command(char *command)
 {
 pid_t pid = fork();
 
-if (pid == 0)
+if (pid == -1)
+{
+perror("Fork failed");
+return (-1);
+}
+else if (pid == 0)
 {
 char *args[] = {command, NULL};
 
 if (execve(command, args, NULL) == -1)
 {
 perror("./simple_shell");
-}
 exit(EXIT_FAILURE);
 }
-else if (pid < 0)
-{
-perror("Fork failed");
-return (-1);
 }
 else
 {
@@ -63,16 +46,15 @@ return (1);
  */
 int main(void)
 {
-char *command;
+char command[BUFFER_SIZE];
 
 while (1)
 {
-printf("#cisfun$ ");
+printf(PROMPT);
 
-command = read_command();
-
-if (command == NULL)
+if (fgets(command, sizeof(command), stdin) == NULL)
 {
+printf("\n");
 break;
 }
 
@@ -82,8 +64,6 @@ if (strlen(command) > 0)
 {
 execute_command(command);
 }
-
-free(command);
 }
 
 return (0);
