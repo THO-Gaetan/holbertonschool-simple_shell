@@ -1,70 +1,82 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/wait.h>
 
-#define PROMPT "#cisfun$ "
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 64
 
 /**
- * execute_command - Executes a command using execve
- * @command: The command to execute
+ * read_command - Reads a command from standard input.
  *
- * Return: 1 on success, -1 on failure
+ * Return: Pointer to the command string or NULL on failure.
  */
-int execute_command(char *command)
+char *read_command(void)
 {
-pid_t pid = fork();
+    char *command = NULL;
+    size_t bufsize = 0;
+    ssize_t len = getline(&command, &bufsize, stdin);
 
-if (pid == -1)
-{
-perror("Fork failed");
-return (-1);
-}
-else if (pid == 0)
-{
-char *args[] = {command, NULL};
+    if (len == -1) {
+        return NULL;
+    }
 
-if (execve(command, args, NULL) == -1)
-{
-perror("./simple_shell");
-exit(EXIT_FAILURE);
-}
-}
-else
-{
-wait(NULL);
-}
-return (1);
+    command[strcspn(command, "\n")] = 0;
+    return command;
 }
 
 /**
- * main - Entry point of the simple shell
+ * execute - Executes a given command.
+ * @command: The command to execute.
  *
- * Return: Always 0 (Success)
+ * Return: 1 on success, otherwise 0.
+ */
+int execute(char *command)
+{
+    pid_t pid, wait_pid;
+    int status;
+
+    pid = fork();
+
+    if (pid == 0) {
+        char *args[] = {command, NULL};
+        if (execvp(args[0], args) == -1) {
+            fprintf(stderr, "./simple_shell: %s: No such file or directory\n", command);
+        }
+        exit(EXIT_FAILURE);
+    } else if (pid < 0) {
+        perror("Error creating child process");
+    } else {
+        do {
+            wait_pid = waitpid(pid, &status, WUNTRACED);
+        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
+
+    return 1;
+}
+
+/**
+ * main - Entry point of the simple shell.
+ *
+ * Return: Always 0.
  */
 int main(void)
 {
-char command[BUFFER_SIZE];
+    char *command;
+    int status;
 
-while (1)
-{
-printf(PROMPT);
+    do {
+        printf("#cisfun$ ");
+        command = read_command();
 
-if (fgets(command, sizeof(command), stdin) == NULL)
-{
-printf("\n");
-break;
-}
+        if (command == NULL) {
+            free(command);
+            exit(0);
+        }
 
-command[strcspn(command, "\n")] = 0;
+        status = execute(command);
+        free(command);
+    } while (status);
 
-if (strlen(command) > 0)
-{
-execute_command(command);
-}
-}
-
-return (0);
+    return 0;
 }
