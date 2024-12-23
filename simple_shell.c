@@ -52,7 +52,7 @@ int execute(char *command)
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
 
-    return 1;
+    return (1);
 }
 
 /**
@@ -78,5 +78,5 @@ int main(void)
         free(command);
     } while (status);
 
-    return 0;
+    return (0);
 }
