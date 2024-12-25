@@ -13,16 +13,17 @@
  */
 char *read_command(void)
 {
-    char *command = NULL;
-    size_t bufsize = 0;
-    ssize_t len = getline(&command, &bufsize, stdin);
+char *command = NULL;
+size_t bufsize = 0;
+ssize_t len = getline(&command, &bufsize, stdin);
 
-    if (len == -1) {
-        return NULL;
-    }
+if (len == -1)
+{
+return (NULL);
+}
 
-    command[strcspn(command, "\n")] = 0;
-    return command;
+command[strcspn(command, "\n")] = 0;
+return (command);
 }
 
 /**
@@ -33,26 +34,34 @@ char *read_command(void)
  */
 int execute(char *command)
 {
-    pid_t pid, wait_pid;
-    int status;
+pid_t pid, wait_pid;
+int status;
 
-    pid = fork();
+pid = fork();
 
-    if (pid == 0) {
-        char *args[] = {command, NULL};
-        if (execvp(args[0], args) == -1) {
-            fprintf(stderr, "./simple_shell: %s: No such file or directory\n", command);
-        }
-        exit(EXIT_FAILURE);
-    } else if (pid < 0) {
-        perror("Error creating child process");
-    } else {
-        do {
-            wait_pid = waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
+if (pid == 0)
+{
+char *args[] = {command, NULL};
+if (execvp(args[0], args) == -1)
+{
+fprintf(stderr, "./simple_shell: %s: No such file or directory\n", command);
+}
+exit(EXIT_FAILURE);
+}
+else if (pid < 0)
+{
+perror("Error creating child process");
+}
+else
+{
+do
+}
+wait_pid = waitpid(pid, &status, WUNTRACED);
+}
+while (!WIFEXITED(status) && !WIFSIGNALED(status))
+}
 
-    return (1);
+return (1);
 }
 
 /**
@@ -62,21 +71,23 @@ int execute(char *command)
  */
 int main(void)
 {
-    char *command;
-    int status;
+char *command;
+int status;
 
-    do {
-        printf("#cisfun$ ");
-        command = read_command();
+do
+}
+printf("#cisfun$ ");
+command = read_command();
 
-        if (command == NULL) {
-            free(command);
-            exit(0);
-        }
+if (command == NULL)
+{
+free(command);
+exit(0);
+}
+status = execute(command);
+free(command);
+}
+while (status)
 
-        status = execute(command);
-        free(command);
-    } while (status);
-
-    return (0);
+return (0);
 }
