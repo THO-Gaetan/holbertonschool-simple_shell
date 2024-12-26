@@ -1,49 +1,66 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
-/**
- * main -  The main function of the shell.
- * Return: EXIT_SUCCESS on success or return code > 0 if error.
- */
+#define BUFFER_SIZE 1024
 
-int main(void)
+void prompt()
 {
-	char *input_buffer = NULL, **myargv;
-	size_t size_allocated;
-	int char_read, ret = EXIT_SUCCESS;
+	printf("$ ");
+}
 
-	signal(SIGINT, SIG_IGN); /* ignore ctrl-C signal */
-	do {
-		if (isatty(STDIN_FILENO))
-			printf("\033[0;39m#simple_shell(%d)$ ", getpid());
+int main()
+{
+	char *line = NULL;
 
-		fflush(stdin);
-		char_read = getline(&input_buffer, &size_allocated, stdin);
+	size_t len = 0;
+	ssize_t read;
 
-		if (char_read == 1)
-			continue;
-		if (char_read == EOF)
+	while (1) {
+		prompt();
+		read = getline(&line, &len, stdin);
+
+		if (read == -1)
 		{
-			free(input_buffer);
-			if (isatty(STDIN_FILENO))
-				putchar('\n');
-			return (ret);
+			free(line);
+			exit(0);
 		}
 
-		input_buffer[char_read - 1] = 0;
-		if (strncmp(input_buffer, "env", 3) == 0)
+		line[strcspn(line, "\n")] = 0;
+
+		if (strcmp(line, "") == 0)
 		{
-			print_env();
 			continue;
 		}
-		if (strncmp(input_buffer, "exit", 4) == 0)
+
+		pid_t pid = fork();
+
+		if (pid == -1)
 		{
-			free(input_buffer);
-			return (ret);
+			perror("fork failed");
+			free(line);
+			exit(1);
 		}
-		myargv = fill_args(input_buffer);
-		if (myargv[0] != NULL)
-			ret = execute_command(myargv);
-		free(myargv);
+
+		if (pid == 0)
+		{
+			char *argv[] = {line, NULL};
+
+			if (execve(line, argv, NULL) == -1)
+			{
+				perror("Error executing command");
+				exit(1);
+			}
+		}
+		else
+		{
+			wait(NULL);
+		}
 	}
-while (1)
+
+	free(line);
+	return (0);
 }
