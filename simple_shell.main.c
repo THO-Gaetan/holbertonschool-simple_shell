@@ -45,5 +45,5 @@ int main(void)
 			ret = execute_command(myargv);
 		free(myargv);
 	}
-while (1);
+while (1)
 }
