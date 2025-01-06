@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * enter_shell - Entry point of the program
+ *
+ * Return: Always 0 (Success)
+ */
 int enter_shell(void)
 {
 	char *box = NULL;
@@ -28,13 +33,21 @@ int enter_shell(void)
 	free(box);
 	return (0);
 }
-
+/**
+ * exit_shell - Entry point of the program
+ *
+ * Return: Always 0 (Success)
+ */
 int exit_shell(void)
 {
 	printf("Erreur dans le shell\nSortie du shell\n");
 	exit(0);
 }
-
+/**
+ * remove_newline - Entry point of the program
+ * @str : the string that need to be changed
+ * Return: Always 0 (Success)
+ */
 char *remove_newline(char *str)
 {
 	int i = 0;
