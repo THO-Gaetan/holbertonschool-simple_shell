@@ -14,8 +14,42 @@
  */
 void display_prompt(void)
 {
-    printf(PROMPT);
-    fflush(stdout);
+	printf("%s", PROMPT);
+	fflush(stdout);
+}
+
+/**
+ * execute_command - Exécute la commande donnée
+ * @command: La commande à exécuter
+ *
+ * Return: 0 en cas de succès, -1 en cas d'échec
+ */
+int execute_command(char *command)
+{
+	pid_t pid;
+	char *args[2];
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (-1);
+	}
+	else if (pid == 0)
+	{
+		args[0] = command;
+		args[1] = NULL;
+		if (execve(command, args, environ) == -1)
+		{
+			printf("%s: No such file or directory\n", command);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		wait(NULL);
+	}
+	return (0);
 }
 
 /**
@@ -25,48 +59,26 @@ void display_prompt(void)
  */
 int main(void)
 {
-    char command[MAX_COMMAND_LENGTH];
-    char *args[2];
-    pid_t pid;
+	char command[MAX_COMMAND_LENGTH];
 
-    while (1)
-    {
-        display_prompt();
+	while (1)
+	{
+		display_prompt();
 
-        if (fgets(command, sizeof(command), stdin) == NULL)
-        {
-            printf("\n");
-            break;
-        }
+		if (fgets(command, sizeof(command), stdin) == NULL)
+		{
+			printf("\n");
+			break;
+		}
 
-        command[strcspn(command, "\n")] = '\0';
+		command[strcspn(command, "\n")] = '\0';
 
-        if (strlen(command) == 0)
-            continue;
+		if (strlen(command) == 0)
+			continue;
 
-        pid = fork();
+		if (execute_command(command) == -1)
+			break;
+	}
 
-        if (pid == -1)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-        else if (pid == 0)
-        {
-            args[0] = command;
-            args[1] = NULL;
-
-            if (execve(command, args, NULL) == -1)
-            {
-                printf("./shell: No such file or directory\n");
-                exit(EXIT_FAILURE);
-            }
-        }
-        else
-        {
-            wait(NULL);
-        }
-    }
-
-    return (0);
+	return (0);
 }
