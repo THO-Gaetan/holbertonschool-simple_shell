@@ -2,67 +2,71 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 
-#define BUFFER_SIZE 1024
+#define MAX_COMMAND_LENGTH 1024
+#define PROMPT "#cisfun$ "
 
-void prompt()
+/**
+ * display_prompt - Affiche le prompt du shell
+ *
+ * Cette fonction affiche le prompt défini et vide le buffer de sortie.
+ */
+void display_prompt(void)
 {
-	printf("$ ");
+    printf(PROMPT);
+    fflush(stdout);
 }
 
-int main()
+/**
+ * main - Point d'entrée du programme shell
+ *
+ * Return: Toujours 0 (Succès)
+ */
+int main(void)
 {
-	char *line = NULL;
+    char command[MAX_COMMAND_LENGTH];
+    char *args[2];
+    pid_t pid;
 
-	size_t len = 0;
-	ssize_t read;
-	pid_t pid;
+    while (1)
+    {
+        display_prompt();
 
-	while (1)
-	{
-		prompt();
-		read = getline(&line, &len, stdin);
+        if (fgets(command, sizeof(command), stdin) == NULL)
+        {
+            printf("\n");
+            break;
+        }
 
-		if (read == -1)
-		{
-			free(line);
-			exit(0);
-		}
+        command[strcspn(command, "\n")] = '\0';
 
-		line[strcspn(line, "\n")] = 0;
+        if (strlen(command) == 0)
+            continue;
 
-		if (strcmp(line, "") == 0)
-		{
-			continue;
-		}
+        pid = fork();
 
-		pid = fork();
+        if (pid == -1)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+        else if (pid == 0)
+        {
+            args[0] = command;
+            args[1] = NULL;
 
-		if (pid == -1)
-		{
-			perror("fork failed");
-			free(line);
-			exit(1);
-		}
+            if (execve(command, args, NULL) == -1)
+            {
+                printf("./shell: No such file or directory\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+        else
+        {
+            wait(NULL);
+        }
+    }
 
-		if (pid == 0)
-		{
-			char *argv[] = {line, NULL};
-
-			if (execve(line, argv, NULL) == -1)
-			{
-				perror("Error executing command");
-				exit(1);
-			}
-		}
-		else
-		{
-			wait(NULL);
-		}
-	}
-
-	free(line);
-	return (0);
+    return (0);
 }
