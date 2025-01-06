@@ -13,6 +13,7 @@ int enter_shell(void);
 int exit_shell(void);
 char *remove_newline(char *str);
 char *command(char *box);
+char **token_separation(char *box);
 
 
 #endif

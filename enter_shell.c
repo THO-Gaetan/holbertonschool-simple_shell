@@ -10,11 +10,10 @@ int enter_shell(void)
 	char *box = NULL;
 	size_t n = 0;
 	ssize_t ctrl_out;
-	char *command_path;
+	char *command_path = "/bin/ls";
 	pid_t pid;
-	char *argv[64];
+	char **argv;
 	char *envp[] = {NULL};
-	int i = 0;
 
 	printf("Ardo@Gaetan:/My_Shell$ ");
 	ctrl_out = getline(&box, &n, stdin);
@@ -32,15 +31,7 @@ int enter_shell(void)
 		free(box);
 		exit_shell();
 	}
-	command_path = command(box);
-	argv[i] = strtok(box, " ");
-	while (argv[i] != NULL)
-	{
-		i++;
-		argv[i] = strtok(NULL, " ");
-	}
-	argv[i] = NULL;
-
+	argv = token_separation(box);
 	if (argv[0] != NULL)
 	{
 		pid = fork();
