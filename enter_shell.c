@@ -5,15 +5,10 @@
  *
  * Return: Always 0 (Success)
  */
-int enter_shell(void)
+int enter_shell(char *box)
 {
-	char *box = NULL;
 	size_t n = 0;
 	ssize_t ctrl_out;
-	char *command_path = "/bin/ls";
-	pid_t pid;
-	char **argv;
-	char *envp[] = {NULL};
 
 	printf("Ardo@Gaetan:/My_Shell$ ");
 	ctrl_out = getline(&box, &n, stdin);
@@ -31,28 +26,6 @@ int enter_shell(void)
 		free(box);
 		exit_shell();
 	}
-	argv = token_separation(box);
-	if (argv[0] != NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (execve(command_path, argv, envp) == -1)
-			{
-				perror("execve");
-				return (1);
-			}
-		}
-		else if (pid > 0)
-		{
-			int status;
-			waitpid(pid, &status, 0);
-		}
-		else
-			perror("fork");
-	}
-
-	printf("%s\n", box);
 	free(box);
 	return (0);
 }
