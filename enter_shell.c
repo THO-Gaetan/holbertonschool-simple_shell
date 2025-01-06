@@ -10,7 +10,7 @@ int enter_shell(void)
 	char *box = NULL;
 	size_t n = 0;
 	ssize_t ctrl_out;
-	char *command_path;
+	char *command_path = "/bin/ls";
 	pid_t pid;
 	char *argv[64];
 	char *envp[] = {NULL};
