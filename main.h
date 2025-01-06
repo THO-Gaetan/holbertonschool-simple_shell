@@ -8,12 +8,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int shell(void);
+int main(void);
 char *enter_shell(char *box);
 int exit_shell(void);
 char *remove_newline(char *str);
 char **token_separation(char *box);
 int execute_command(char **argv);
-char *find_command(const char *command);
+char *find_command(char *command);
 
 #endif

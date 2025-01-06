@@ -17,12 +17,12 @@ char *enter_shell(char *box)
 		free(box);
 		printf("\n");
 		exit_shell();
-		exit(0);
 	}
 	box = remove_newline(box);
 
 	if (strcmp(box, "exit") == 0)
 	{
+		free(box);
 		exit_shell();
 	}
 	return (box);

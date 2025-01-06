@@ -13,7 +13,7 @@
  * Return: A dynamically allocated string with the full path if found,
  *         NULL otherwise
  */
-char *find_command(const char *command)
+char *find_command(char *command)
 {
 char path[256];
 
