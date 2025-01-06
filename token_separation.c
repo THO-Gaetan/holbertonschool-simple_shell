@@ -1,5 +1,6 @@
 #include "main.h"
 
+#define MAX_TOKENS 64
 char **token_separation(char *box)
 {
 	int i = 0;
@@ -12,7 +13,7 @@ char **token_separation(char *box)
 		return (NULL);
 	}
 	argv[i] = strtok(box, " ");
-	while (argv[i] != NULL)
+	while (argv[i] != NULL && i < MAX_TOKENS - 1)
 	{
 		i++;
 		argv[i] = strtok(NULL, " ");

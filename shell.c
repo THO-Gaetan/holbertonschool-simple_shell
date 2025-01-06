@@ -12,11 +12,13 @@ int main(void)
 
 	while (1)
 	{
-		enter_shell(box);
+		box = enter_shell(box);
 
 		argv = token_separation(box);
 
 		execute_command(argv);
 	}
+	free(box);
+	free(argv);
 	return (0);
 }

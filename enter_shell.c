@@ -5,7 +5,7 @@
  *
  * Return: Always 0 (Success)
  */
-int enter_shell(char *box)
+char *enter_shell(char *box)
 {
 	size_t n = 0;
 	ssize_t ctrl_out;
@@ -23,11 +23,9 @@ int enter_shell(char *box)
 
 	if (strcmp(box, "exit") == 0)
 	{
-		free(box);
 		exit_shell();
 	}
-	free(box);
-	return (0);
+	return (box);
 }
 /**
  * exit_shell - exit point of the program

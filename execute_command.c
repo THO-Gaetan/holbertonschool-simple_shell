@@ -2,10 +2,11 @@
 
 int execute_command(char **argv)
 {
-	char *command_path = "/usr/bin/";
+	char *command_path;
 	pid_t pid;
 	char *envp[] = {NULL};
 
+	command_path = find_command(argv[0]);
 	if (argv[0] != NULL)
 	{
 		pid = fork();

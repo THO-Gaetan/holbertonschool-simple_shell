@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 
 int shell(void);
-int enter_shell(char *box);
+char *enter_shell(char *box);
 int exit_shell(void);
 char *remove_newline(char *str);
 char **token_separation(char *box);
