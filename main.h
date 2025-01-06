@@ -12,7 +12,7 @@ int shell(void);
 int enter_shell(void);
 int exit_shell(void);
 char *remove_newline(char *str);
-
+char *command(char *box);
 
 
 #endif

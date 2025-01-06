@@ -10,9 +10,9 @@ int enter_shell(void)
 	char *box = NULL;
 	size_t n = 0;
 	ssize_t ctrl_out;
-	char *command_path = "/usr/bin/ls";
+	char *command_path;
 	pid_t pid;
-	char *argv[] = {"/usr/bin/ls", "-l", NULL};
+	char *argv[64];
 	char *envp[] = {NULL};
 	int i = 0;
 
@@ -32,11 +32,12 @@ int enter_shell(void)
 		free(box);
 		exit_shell();
 	}
+	command_path = command(box);
 	argv[i] = strtok(box, " ");
-	while (box[i] != '\0' && i < 63)
+	while (argv[i] != NULL)
 	{
 		i++;
-		argv[i] = strtok(box, " ");
+		argv[i] = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
 
@@ -65,7 +66,7 @@ int enter_shell(void)
 	return (0);
 }
 /**
- * exit_shell - Entry point of the program
+ * exit_shell - exit point of the program
  *
  * Return: Always 0 (Success)
  */
@@ -75,7 +76,7 @@ int exit_shell(void)
 	exit(0);
 }
 /**
- * remove_newline - Entry point of the program
+ * remove_newline - remove newline to NULL terminaison
  * @str : the string that need to be changed
  * Return: Always 0 (Success)
  */
