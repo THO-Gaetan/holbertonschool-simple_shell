@@ -5,6 +5,8 @@ int enter_shell(void)
 	char *box = NULL;
 	size_t n = 0;
 	ssize_t ctrl_out;
+	char *argv[] = {"ls", "-l", NULL};
+	char *envp[] = {NULL};
 
 	printf("Ardo@Gaetan:/My_Shell$ ");
 	ctrl_out = getline(&box, &n, stdin);
@@ -21,6 +23,7 @@ int enter_shell(void)
 		free(box);
 		exit_shell();
 	}
+	execve(argv[1], argv, envp)
 	printf("%s\n", box);
 	free(box);
 	return (0);
@@ -47,3 +50,5 @@ char *remove_newline(char *str)
 	}
 	return (str);
 }
+
+
