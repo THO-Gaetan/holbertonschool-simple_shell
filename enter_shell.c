@@ -5,9 +5,8 @@
  *
  * Return: Always 0 (Success)
  */
-int enter_shell(void)
+int enter_shell(char *box)
 {
-	char *box = NULL;
 	size_t n = 0;
 	ssize_t ctrl_out;
 	char *command_path = "/bin/ls";
@@ -32,36 +31,6 @@ int enter_shell(void)
 		free(box);
 		exit_shell();
 	}
-	command_path = command(box);
-	argv[i] = strtok(box, " ");
-	while (argv[i] != NULL)
-	{
-		i++;
-		argv[i] = strtok(NULL, " ");
-	}
-	argv[i] = NULL;
-
-	if (argv[0] != NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (execve(command_path, argv, envp) == -1)
-			{
-				perror("execve");
-				return (1);
-			}
-		}
-		else if (pid > 0)
-		{
-			int status;
-			waitpid(pid, &status, 0);
-		}
-		else
-			perror("fork");
-	}
-
-	printf("%s\n", box);
 	free(box);
 	return (0);
 }
