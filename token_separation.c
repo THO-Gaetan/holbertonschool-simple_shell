@@ -9,7 +9,7 @@ char **token_separation(char *box)
 	if (argv == NULL)
 	{
 		perror("malloc failed");
-		return NULL;
+		return (NULL);
 	}
 	argv[i] = strtok(box, " ");
 	while (argv[i] != NULL)
