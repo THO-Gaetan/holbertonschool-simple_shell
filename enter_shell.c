@@ -9,11 +9,6 @@ int enter_shell(char *box)
 {
 	size_t n = 0;
 	ssize_t ctrl_out;
-	char *command_path = "/bin/ls";
-	pid_t pid;
-	char *argv[64];
-	char *envp[] = {NULL};
-	int i = 0;
 
 	printf("Ardo@Gaetan:/My_Shell$ ");
 	ctrl_out = getline(&box, &n, stdin);
