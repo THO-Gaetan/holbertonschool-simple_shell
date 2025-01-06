@@ -18,6 +18,7 @@ int main()
 
 	size_t len = 0;
 	ssize_t read;
+	pid_t pid;
 
 	while (1)
 	{
@@ -37,7 +38,7 @@ int main()
 			continue;
 		}
 
-		pid_t pid = fork();
+		pid = fork();
 
 		if (pid == -1)
 		{
