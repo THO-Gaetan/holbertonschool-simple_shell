@@ -10,11 +10,13 @@ char *enter_shell(char *box)
 	size_t n = 0;
 	ssize_t ctrl_out = 0;
 
-	print_entry();
+	if (isatty(fileno(stdin)))
+		print_entry();
 	ctrl_out = getline(&box, &n, stdin);
 	if (ctrl_out == -1)
 	{
-		printf("\n");
+		if (isatty(fileno(stdin)))
+			printf("\n");
 		free(box);
 		exit(0);
 	}

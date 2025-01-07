@@ -19,5 +19,6 @@ char *find_command(char *command);
 void print_environment(void);
 extern char **environ;
 void print_env(char **env);
+int command_status(char *command);
 
 #endif

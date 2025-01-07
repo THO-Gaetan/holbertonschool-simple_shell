@@ -9,6 +9,7 @@ int main(void)
 {
 	char *box = NULL;
 	char **argv;
+	int status;
 
 	while (1)
 	{
@@ -17,7 +18,13 @@ int main(void)
 		argv = token_separation(box);
 
 
-		execute_command(argv);
+		status = execute_command(argv);
+
+		if (status == 127)
+		{
+			/* Handle error case*/
+			continue;
+		}
 		free(box);
 		free(argv);
 	}
