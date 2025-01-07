@@ -1,16 +1,19 @@
 #include "main.h"
 /**
- * print_environment - Prints the current environment
- *
- * Description: This function prints all environment variables
- * stored in the _environ array, one per line.
+ * print_env - Prints the environment variables
+ * @env: Arguments
  */
-void print_environment(void)
+void print_env(char **env)
 {
-char **env = __environ;
+int i;
+char *str;
 while (*env != NULL)
 {
-printf("%s\n", *env);
+str = *env;
+for (i = 0; str[i]; i++)
+;
+write(1, str, i);
+write(1, "\n", 1);
 env++;
 }
 }

@@ -18,6 +18,6 @@ int execute_command(char **argv);
 char *find_command(char *command);
 void print_environment(void);
 extern char **environ;
-
+void print_env(char **env);
 
 #endif
