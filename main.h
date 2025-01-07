@@ -10,6 +10,7 @@
 
 int main(void);
 char *enter_shell(char *box);
+int print_entry(void);
 int exit_shell(void);
 char *remove_newline(char *str);
 char **token_separation(char *box);

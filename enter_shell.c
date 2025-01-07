@@ -8,15 +8,15 @@
 char *enter_shell(char *box)
 {
 	size_t n = 0;
-	ssize_t ctrl_out;
+	ssize_t ctrl_out = 0;
 
-	printf("Ardo@Gaetan:/My_Shell$ ");
+	print_entry();
 	ctrl_out = getline(&box, &n, stdin);
 	if (ctrl_out == -1)
 	{
 		printf("\n");
 		free(box);
-		exit_shell();
+		exit(0);
 	}
 	box = remove_newline(box);
 
