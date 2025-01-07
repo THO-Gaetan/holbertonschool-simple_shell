@@ -14,11 +14,10 @@ char *enter_shell(char *box)
 	ctrl_out = getline(&box, &n, stdin);
 	if (ctrl_out == -1)
 	{
-		free(box);
 		printf("\n");
+		free(box);
 		exit_shell();
 	}
-	free(box);
 	box = remove_newline(box);
 
 	if (strcmp(box, "exit") == 0)
