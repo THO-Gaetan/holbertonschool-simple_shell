@@ -10,7 +10,6 @@ char **token_separation(char *box)
 	if (argv == NULL)
 	{
 		perror("malloc failed");
-		free(argv);
 		return (NULL);
 	}
 	argv[i] = strtok(box, " ");

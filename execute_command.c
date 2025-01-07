@@ -15,7 +15,7 @@ int execute_command(char **argv)
 			if (execve(command_path, argv, envp) == -1)
 			{
 				perror("execve");
-				free(argv);
+				free(command_path);
 				return (1);
 			}
 		}
@@ -29,6 +29,5 @@ int execute_command(char **argv)
 			perror("fork");
 	}
 	free(command_path);
-	free(argv);
 	return (0);
 }

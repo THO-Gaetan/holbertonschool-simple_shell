@@ -2,7 +2,7 @@
 
 /**
  * enter_shell - Entry point of the program
- *
+ * @box : user given string
  * Return: Always 0 (Success)
  */
 char *enter_shell(char *box)
@@ -18,6 +18,7 @@ char *enter_shell(char *box)
 		printf("\n");
 		exit_shell();
 	}
+	free(box);
 	box = remove_newline(box);
 
 	if (strcmp(box, "exit") == 0)
