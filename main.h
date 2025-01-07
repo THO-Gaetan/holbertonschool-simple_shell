@@ -15,5 +15,6 @@ char *remove_newline(char *str);
 char **token_separation(char *box);
 int execute_command(char **argv);
 char *find_command(char *command);
+void print_environment(void);
 
 #endif
