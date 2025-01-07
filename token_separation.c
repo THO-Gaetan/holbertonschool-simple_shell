@@ -1,6 +1,11 @@
 #include "main.h"
 
 #define MAX_TOKENS 64
+/**
+ * token_separation - start of the separation function
+ * @box : user given string
+ * Return: Always 0 (Success)
+ */
 char **token_separation(char *box)
 {
 	int i = 0;
