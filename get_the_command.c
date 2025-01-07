@@ -15,15 +15,20 @@
  */
 char *find_command(char *command)
 {
-char path[256];
+	char path[256];
 
-if (command == NULL)
-return (NULL);
+	if (command == NULL)
+		return (NULL);
+	if (strchr(command, '/') != NULL)
+	{
+		if (access(command, X_OK) == 0)
+			return (strdup(command));
+		return (NULL);
+	}
+	snprintf(path, sizeof(path), "/bin/%s", command);
 
-snprintf(path, sizeof(path), "/usr/bin/%s", command);
+	if (access(path, X_OK) == 0)
+		return (strdup(path));
 
-if (access(path, X_OK) == 0)
-return (strdup(path));
-
-return (NULL);
+	return (NULL);
 }
