@@ -31,7 +31,6 @@ int command_status(char *command)
 		return (0);
 
 	fprintf(stderr, "./shell: 1: %s: not found\n", command);
-	free(command);
 	return (127);
 	}
 

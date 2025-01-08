@@ -20,13 +20,16 @@ int main(void)
 
 		status = execute_command(argv);
 
+		free(box);
+		if (argv != NULL)
+		{
+			free(argv);
+		}
 		if (status == 127)
 		{
 			/* Handle error case*/
 			continue;
 		}
-		free(box);
-		free(argv);
 	}
 	return (0);
 }
