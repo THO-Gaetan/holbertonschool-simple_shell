@@ -18,6 +18,7 @@ int execute_command(char *argv[], char *envp[])
 	if (strcmp(argv[0], "env") == 0)
 	{
 		print_env(envp);
+		free(command_path);
 		return (0);
 	}
 	if (argv[0] != NULL)
@@ -25,6 +26,7 @@ int execute_command(char *argv[], char *envp[])
 		pid = fork();
 		if (pid == -1)
 		{
+			free(command_path);
 			return (1);
 			exit(EXIT_FAILURE);
 		}
