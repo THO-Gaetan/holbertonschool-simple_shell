@@ -4,11 +4,10 @@
  * @argv : the tokenisen string that the user enter.
  * Return: Always 0 (Success)
  */
-int execute_command(char **argv)
+int execute_command(char *argv[], char *envp[])
 {
 	char *command_path;
 	pid_t pid;
-	char *envp[] = {NULL};
 	int result;
 	int status;
 
@@ -16,6 +15,11 @@ int execute_command(char **argv)
 	if (status == 127)
 		return (status);
 	command_path = find_command(argv[0]);
+	if (strcmp(argv[0], "env") == 0)
+	{
+		print_env(envp);
+		return (0);
+	}
 	if (argv[0] != NULL)
 	{
 		pid = fork();

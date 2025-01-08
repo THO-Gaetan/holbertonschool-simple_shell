@@ -23,7 +23,6 @@ char *enter_shell(char *box)
 	box = remove_newline(box);
 	return (box);
 }
-
 /**
  * remove_newline - remove newline to NULL terminaison
  * @str : the string that need to be changed

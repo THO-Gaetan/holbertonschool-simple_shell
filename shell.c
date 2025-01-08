@@ -5,12 +5,13 @@
  * Return: Always 0 (Success)
  */
 
-int main(void)
+int main(int argc, char *argv[], char *envp[])
 {
 	char *box = NULL;
-	char **argv;
 	int status;
 
+	if (argc == 0)
+		return (0);
 	while (1)
 	{
 		box = enter_shell(box);
@@ -18,7 +19,7 @@ int main(void)
 		argv = token_separation(box);
 
 
-		status = execute_command(argv);
+		status = execute_command(argv, envp);
 
 		free(box);
 		if (argv != NULL)
