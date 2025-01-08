@@ -21,24 +21,9 @@ char *enter_shell(char *box)
 		exit(0);
 	}
 	box = remove_newline(box);
-
-	if (strcmp(box, "exit") == 0)
-	{
-		free(box);
-		exit_shell();
-	}
 	return (box);
 }
-/**
- * exit_shell - exit point of the program
- *
- * Return: Always 0 (Success)
- */
-int exit_shell(void)
-{
-	printf("exit\n");
-	exit(0);
-}
+
 /**
  * remove_newline - remove newline to NULL terminaison
  * @str : the string that need to be changed
