@@ -43,7 +43,6 @@ int command_status(char *command)
  */
 char *find_command(char *command)
 {
-	char *path_env, *path_copy, *temp;
 	char path[256];
 
 	if (command == NULL)
@@ -53,21 +52,6 @@ char *find_command(char *command)
 		if (access(command, X_OK) == 0)
 			return (strdup(command));
 		return (NULL);
-	}
-	path_env = getenv("PATH");
-	if (path_env == NULL)
-		return (NULL);
-	path_copy = strdup(path_env);
-	temp = strtok(path_copy, ":");
-	while (temp != NULL)
-	{
-		snprintf(path, sizeof(path), "%s/%s", temp, command);
-		if (access(path, X_OK) == 0)
-		{
-			free(path_copy);
-			return (strdup(path));
-		}
-		temp = strtok(NULL, ":");
 	}
 	snprintf(path, sizeof(path), "/bin/%s", command);
 	if (access(path, X_OK) == 0)
