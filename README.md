@@ -28,7 +28,6 @@ My Shell is a simple shell implementation in C, offering basic command-line inte
 
 To compile the shell, use the following command:
 
-```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o shell
 
 ## Resources
