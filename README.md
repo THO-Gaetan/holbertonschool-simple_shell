@@ -1,19 +1,20 @@
 # Simple Shell Project
 
+![alt text](test/Gnu-bash-logo.svg.png)
+
 ## Description
 
 My Shell is a simple shell implementation in C, offering basic command-line interface functionality.
 
 ## Features
 
-- Displays a prompt "$ " and waits for user input
+- Displays a prompt "Ardo@Gaetan " and waits for user input
 - Executes simple shell commands
 - Handles command lines with arguments
-- Implements built-in commands: exit, env, setenv, unsetenv
+- Implements built-in commands: exit, env.
 - Handles the PATH to find executable programs
 - Supports interactive and non-interactive modes
 - Handles the EOF (End Of File) condition
-- Handles the Ctrl + C signal without exiting the shell
 
 ## Requirements
 
@@ -44,6 +45,7 @@ access, chdir, close, closedir, execve, exit, _exit, fflush, fork, free, getcwd,
 
 ## Authors
 [NaganoMSL228](https://github.com/NaganoMSL228)
+
 [THO-Gaetan](https://github.com/THO-Gaetan)
 
 ## License
