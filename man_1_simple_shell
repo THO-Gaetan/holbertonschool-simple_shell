@@ -1,10 +1,10 @@
 MY_SHELL(1)                   My_Shell_Manual                   MY_SHELL(1)
 
 NAME
-       my_shell - simple shell implementation
+       Shell - simple shell implementation
 
 SYNOPSIS
-        .B hsh
+        .B Shell
         [FILE]
 
 DESCRIPTION
