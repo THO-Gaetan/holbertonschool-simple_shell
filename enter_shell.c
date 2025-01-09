@@ -23,6 +23,8 @@ char *enter_shell(char *box)
 	box = remove_newline(box);
 	if (strcmp(box, "exit") == 0)
 	{
+		if (isatty(STDIN_FILENO))
+			printf("exit");
 		free(box);
 		exit(2);
 	}
