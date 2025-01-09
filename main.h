@@ -13,7 +13,6 @@
 int main(int argc, char *argv[], char *envp[]);
 char *enter_shell(char *box);
 int print_entry(void);
-int exit_shell(void);
 char *remove_newline(char *str);
 char **token_separation(char *box);
 int execute_command(char *argv[], char *envp[]);
