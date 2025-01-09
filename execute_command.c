@@ -15,6 +15,8 @@ int execute_command(char *argv[], char *envp[])
 	if (status == 127)
 		return (status);
 	command_path = find_command(argv[0]);
+	if (command_path == NULL)
+		return (1);
 	if (strcmp(argv[0], "env") == 0)
 	{
 		print_env(envp);
@@ -28,7 +30,6 @@ int execute_command(char *argv[], char *envp[])
 		{
 			free(command_path);
 			return (1);
-			exit(EXIT_FAILURE);
 		}
 		if (pid == 0)
 		{
@@ -36,7 +37,7 @@ int execute_command(char *argv[], char *envp[])
 			{
 				perror("execve");
 				free(command_path);
-				return (-1);
+				exit(EXIT_FAILURE);
 			}
 		}
 		else
