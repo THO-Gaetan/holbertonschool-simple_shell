@@ -31,6 +31,8 @@ To compile the shell, use the following command:
 
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o shell
 
+## Example
+![alt text](<test/Capture d'écran 2025-01-09 232031.png>)
 ## Flowchart
 
 ![alt text](test/Flowchart.png)
