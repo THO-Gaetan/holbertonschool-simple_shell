@@ -21,6 +21,11 @@ char *enter_shell(char *box)
 		exit(0);
 	}
 	box = remove_newline(box);
+	if (strcmp(box, "exit") == 0)
+	{
+		free(box);
+		exit(2);
+	}
 	return (box);
 }
 /**
