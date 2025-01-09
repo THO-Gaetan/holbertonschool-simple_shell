@@ -1,12 +1,61 @@
-#include <stdio.h>
+MY_SHELL(1)                   My_Shell_Manual                   MY_SHELL(1)
 
-/**
- * main - Entry point of the program
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-    printf("Hello, World!\n");
-    return (0);
-}
+NAME
+       my_shell - simple shell implementation
+
+SYNOPSIS
+        .B hsh
+        [FILE]
+
+DESCRIPTION
+       my_shell is a simple shell implementation that provides basic command
+       line interface functionality. It allows users to execute commands,
+       manage the environment, and perform basic shell operations.
+
+COMMANDS
+       The following built-in commands are supported:
+
+       exit
+              Exit the shell.
+
+       env
+              Print the current environment variables.
+
+FEATURES
+       Command Execution
+              The shell can execute external commands found in the system's
+              PATH.
+
+       Input Handling
+              Handles user input, removing trailing newlines.
+
+       Command Tokenization
+              Separates user input into command and arguments.
+
+       Environment Management
+              Provides access to and manipulation of environment variables.
+
+ENVIRONMENT
+       MY_SHELL_PROMPT
+              If set, uses this value as the shell prompt. Otherwise, uses
+              a default prompt.
+
+FILES
+       /bin/  Directory searched for executable commands.
+
+AUTHOR
+       Written by [Gaetan Pineiro and Ardonit Musliu].
+       (https://github.com/THO-Gaetan)
+       (https://github.com/NaganoMSL228)
+
+REPORTING BUGS
+    No known bugs.
+
+
+License
+
+    This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+       
+    bash(1), sh(1)
+
+    My_Shell 1.0                  January 2025                    MY_SHELL(1)
