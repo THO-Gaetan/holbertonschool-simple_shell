@@ -38,7 +38,7 @@ Here an exemple of one of the command we can use with our shell
 ![alt text](<test/Capture d'écran 2025-01-09 232031.png>)
 ## Flowchart
 
-![alt text](test/Flowchart.png)
+![alt text](test/FlowChart.png)
 
 ## Resources
 
