@@ -35,10 +35,10 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o shell
 
 Here an exemple of one of the command we can use with our shell
 
-![alt text](<test/Capture d'écran 2025-01-09 232031.png>)
+![alt text](<test/commande ls -a.png>)
 ## Flowchart
 
-![alt text](test/FlowChart.png)
+![alt text](FlowChart.png)
 
 ## Resources
 
